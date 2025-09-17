@@ -3,6 +3,8 @@
 
 import { defineConfig } from '#q-app/wrappers'
 
+import Components from 'unplugin-vue-components/vite'
+const isLocalSupabase = false
 export default defineConfig((/* ctx */) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
@@ -11,7 +13,8 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: [],
+    boot: ['router-auth'],
+    // boot: ['router-auth'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -32,12 +35,21 @@ export default defineConfig((/* ctx */) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
+      env: {
+        SUPABASE_URL: isLocalSupabase ? 'http://127.0.0.1:54321' : 'https://supabase.flowkirim.com',
+        SUPABASE_KEY: isLocalSupabase
+          ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+          : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzQ5NzQ3NjAwLCJleHAiOjE5MDc1MTQwMDB9.VaOusmUoRgO9h2qTXUlJhmeesIrl-A5REvVonidztCU',
+        SUPABASE_SERVICE_ROLE_KEY: isLocalSupabase
+          ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+          : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3NDk3NDc2MDAsImV4cCI6MTkwNzUxNDAwMH0.TvzFqQaUlukAiH4WKLgjRaIBAw32YrlB31cUIML_v8Q',
+      },
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -58,14 +70,23 @@ export default defineConfig((/* ctx */) => {
 
       vitePlugins: [
         [
-          'vite-plugin-checker',
-          {
-            eslint: {
-              lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{js,mjs,cjs,vue}"',
-              useFlatConfig: true,
-            },
-          },
-          { server: false },
+          // 'vite-plugin-checker',
+          // {
+          //   eslint: {
+          //     lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{js,mjs,cjs,vue}"',
+          //     useFlatConfig: true,
+          //   },
+          // },
+          // { server: false },
+          Components({
+            // https://github.com/unplugin/unplugin-vue-components#usage
+            globs: [
+              // To debug: DEBUG=unplugin-vue-components:glob pnpm dev
+              `src/components/**/*.vue`,
+              `src/modules/**/components/**/*.vue`,
+            ],
+            dts: `src/components.d.ts`,
+          }),
         ],
       ],
     },
@@ -91,12 +112,12 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Dialog', 'Notify', 'LocalStorage'],
     },
 
     // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
-    animations: [],
+    animations: ['jackInTheBox', 'fadeInUp', 'fadeOutDown'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#sourcefiles
     // sourceFiles: {

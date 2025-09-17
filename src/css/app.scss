@@ -1,1 +1,46 @@
 // app global css in SCSS form
+// styles/globals.scss
+:root {
+  --primary-color: #00d4aa;
+  --secondary-color: #6366f1;
+  --text-primary: #2c3e50;
+  --text-secondary: #6c757d;
+  --gradient-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+// Utility classes
+.gradient-bg {
+  background: var(--gradient-bg);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #00b894 100%);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}

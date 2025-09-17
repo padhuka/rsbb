@@ -1,0 +1,14 @@
+{
+  "name": "homecare",
+  "version": "0.0.1",
+  "description": "RSBB Homecare App",
+  "author": "padhuka <it.hondasolobaru@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/geolocation": "^7.1.5"
+  }
+}

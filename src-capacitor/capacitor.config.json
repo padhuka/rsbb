@@ -1,0 +1,10 @@
+{
+  "appId": "org.capacitor.quasar.app",
+  "appName": "homecare app",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

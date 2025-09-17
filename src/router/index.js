@@ -5,16 +5,18 @@ import {
   createWebHistory,
   createWebHashHistory,
 } from 'vue-router'
-import routes from './routes'
+import routesUser from './user'
+import routesGuest from './guest'
 
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Router instance.
- */
+const routes = [
+  {
+    path: '/:catchAll(.*)*',
+    component: () => import('pages/ErrorNotFound.vue'),
+  },
+]
+
+routes.push(...routesGuest)
+routes.push(...routesUser)
 
 export default defineRouter(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
@@ -24,6 +26,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
       : createWebHashHistory
 
   const Router = createRouter({
+    //   console.log("process.env", process.env)
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
